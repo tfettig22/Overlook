@@ -8,4 +8,40 @@ import './css/styles.css';
 import './images/turing-logo.png'
 
 
-console.log('This is the JavaScript entry file - your code begins here.');
+// *** Query Selectors *** //
+
+const bookARoomBtn = document.querySelector('.go-to-book-page');
+const myBookingsBtn = document.querySelector('.go-to-dashboard');
+const dashboardContainer = document.querySelector('.dashboard-container');
+const bookARoomContainer = document.querySelector('.book-a-room-container')
+
+// *** Event Listeners *** //
+
+bookARoomBtn.addEventListener('click', goToBookPage);
+myBookingsBtn.addEventListener('click', goToDashboard);
+
+// *** Global Variables *** //
+
+// *** Functions *** //
+
+function hide(element) {
+  element.classList.add('hidden');
+}
+
+function show(element) {
+  element.classList.remove('hidden');
+}
+
+function goToBookPage() {
+  hide(dashboardContainer);
+  hide(bookARoomBtn);
+  show(bookARoomContainer);
+  show(myBookingsBtn);
+}
+
+function goToDashboard() {
+  hide(bookARoomContainer);
+  hide(myBookingsBtn);
+  show(dashboardContainer);
+  show(bookARoomBtn);
+}

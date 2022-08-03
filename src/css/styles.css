@@ -1,3 +1,205 @@
+* {
+  /* border: 1px solid red; */
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 body {
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+  background-color: rgb(192, 191, 191);
+}
+
+.header-container {
+  display: flex;
+  width: 100%;
+  height: 150px;
+}
+
+.logo {
+  height: 90%;
+  width: auto;
+  filter: invert(100)
+}
+
+.logo-container,
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 20%;
+  background-color: black;
+}
+
+.header {
+  display: flex;
+  width: 60%;
+  height: 100%;
+  background-image: url(../images/denverlights.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.main-header {
+  height: 50%;
+  width: 100%;
+  align-self: center;
+  text-align: center;
+  font-size: 3.5em;
+  color: white;
+  text-shadow: 3px 0 3px black, -3px 0 3px black, 0 3px 3px black, 0 -3px 3px black;
+}
+
+.go-to-book-page,
+.go-to-dashboard {
+  height: 40%;
+  width: 50%;
+  align-self: center;
+  border-radius: 10px;
+  font-size: 1.5em;
+}
+
+.bookings-header {
+  text-align: center;
+  font-size: 2em;
+  margin: 20px 0px 20px 0px;
+}
+
+.dashboard-container,
+.book-a-room-container {
+  display: flex;
+  height: 700px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.upcoming-bookings-container {
+  display: flex;
+  flex-direction: column;
+  height: 95%;
+  width: 50%;
+  border: 2px solid orange;
+  margin-left: 60px;
+}
+
+.upcoming-bookings-header,
+.customer-welcome-message,
+.available-rooms-header {
+  text-align: center;
+  height: 8%;
+  padding-top: 20px;
+  font-size: 2em;
+}
+
+.upcoming-bookings,
+.past-bookings,
+.available-rooms {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  height: 85%;
+  width: 95%;
+  margin: 10px 0px 0px 0px;
+  overflow-y: scroll;
+  border: 2px solid grey;
+}
+
+.customer-info-container {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  width: 40%;
+  margin: 20px 60px 0px 0px;
+  border: 2px solid blue;
+}
+
+.past-bookings-container {
+  display: flex;
+  flex-direction: column;
+  height: 85%;
+  width: 95%;
+  align-self: center;
+}
+
+.past-bookings-header {
+  text-align: center;
+  height: 6%;
+  padding-top: 10px;
+  font-size: 1.5em;
+}
+
+.total-spent {
+  text-align: center;
+  font-size: 1.5em;
+  height: 8%;
+  padding-top: 20px;
+}
+
+.available-rooms-container {
+  display: flex;
+  flex-direction: column;
+  height: 95%;
+  width: 70%;
+  border: 2px solid purple;
+  margin-left: 60px;
+}
+
+
+.room-selection-container {
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+  width: 20%;
+  margin: 20px 60px 0px 0px;
+  border: 2px solid green;
+}
+
+.room-select-prompt {
+  text-align: center;
+  align-self: center;
+  height: 20%;
+  width: 80%;
+  padding-top: 20px;
+  font-size: 1.5em;
+}
+
+.type-and-date-container {
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+  width: 80%;
+  align-self: center;
+  border: 1px solid grey;
+}
+
+.label {
+  text-align: center;
+  font-size: 1.2em;
+  margin: 20px 0px 0px 0px;
+}
+
+.room-type-selector,
+.date-selector {
+  align-self: center;
+  font-size: 1.2em;
+  width: 70%;
+  margin: 0px 0px 20px 0px;
+}
+
+.filter-rooms {
+  align-self: center;
+  height: 10%;
+  width: 50%;
+  margin: 20px 0px 0px 0px;
+}
+
+
+
+
+
+
+
+
+.hidden {
+  display: none;
 }
