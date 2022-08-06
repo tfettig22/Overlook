@@ -71,13 +71,13 @@ class Hotel {
   }
 
   findAvailableRooms(date, roomType) {
-    let bookedRooms = this.bookings.filter(booking => booking.date === date).map(booking => booking.roomNumber)
-    let availableRoomsByDate = this.rooms.filter(room => !bookedRooms.includes(room.number))
-    if (roomType !== undefined) {
-      let availableRoomsByType = availableRoomsByDate.filter(room => room.roomType === roomType)
-      return availableRoomsByType
+    let bookedRooms = this.bookings.filter(booking => booking.date === date).map(booking => booking.roomNumber);
+    let availableRoomsByDate = this.rooms.filter(room => !bookedRooms.includes(room.number));
+    if (roomType === undefined || roomType === 'any') {
+      return availableRoomsByDate;
     } else {
-      return availableRoomsByDate
+      let availableRoomsByType = availableRoomsByDate.filter(room => room.roomType === roomType);
+      return availableRoomsByType;
     }
   }
 
