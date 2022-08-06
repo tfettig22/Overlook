@@ -94,7 +94,7 @@ describe('Hotel', () => {
         {
         id: "5fwrgu4i7k55hl6t6",
         userID: 3,
-        date: "2022/01/10",
+        date: "2022/01/24",
         roomNumber: 3
         },
         {
@@ -284,6 +284,102 @@ describe('Hotel', () => {
       roomNumber: 4
       }
     ]);
+  });
+
+  it('should have a method to find available rooms on a certain date', () => {
+    expect(hotel.findAvailableRooms('2022/12/25')).to.deep.equal([
+      {
+        number: 1,
+        roomType: 'residential suite',
+        bidet: true,
+        bedSize: 'queen',
+        numBeds: 1,
+        costPerNight: 358.4
+      },
+      {
+        number: 2,
+        roomType: 'suite',
+        bidet: false,
+        bedSize: 'full',
+        numBeds: 2,
+        costPerNight: 477.38
+      },
+      {
+        number: 3,
+        roomType: 'single room',
+        bidet: false,
+        bedSize: 'king',
+        numBeds: 1,
+        costPerNight: 491.14
+      },
+      {
+        number: 4,
+        roomType: 'junior suite',
+        bidet: true,
+        bedSize: 'queen',
+        numBeds: 1,
+        costPerNight: 397.02
+      }
+    ]);
+
+    expect(hotel.findAvailableRooms('2022/01/24')).to.deep.equal([
+      {
+        number: 1,
+        roomType: 'residential suite',
+        bidet: true,
+        bedSize: 'queen',
+        numBeds: 1,
+        costPerNight: 358.4
+      },
+      {
+        number: 4,
+        roomType: 'junior suite',
+        bidet: true,
+        bedSize: 'queen',
+        numBeds: 1,
+        costPerNight: 397.02
+      }
+    ]);
+  });
+
+  it('should also be able to filter by a specific room type as well a date', () => {
+    expect(hotel.findAvailableRooms('2022/12/25', 'residential suite')).to.deep.equal([
+      {
+        number: 1,
+        roomType: 'residential suite',
+        bidet: true,
+        bedSize: 'queen',
+        numBeds: 1,
+        costPerNight: 358.4
+      }
+    ]);
+
+    expect(hotel.findAvailableRooms('2022/12/25', 'suite')).to.deep.equal([
+      {
+        number: 2,
+        roomType: 'suite',
+        bidet: false,
+        bedSize: 'full',
+        numBeds: 2,
+        costPerNight: 477.38
+      }
+    ]);
+    
+    expect(hotel.findAvailableRooms('2022/01/24', 'residential suite')).to.deep.equal([
+      {
+        number: 1,
+        roomType: 'residential suite',
+        bidet: true,
+        bedSize: 'queen',
+        numBeds: 1,
+        costPerNight: 358.4
+      }
+    ]);
+  });
+
+  it('should return an empty array if no rooms are available for the specified date and/or room type', () => {
+    expect(hotel.findAvailableRooms('2022/01/24', 'suite')).to.deep.equal([]);
+    expect(hotel.findAvailableRooms('2023/02/16', 'junior suite')).to.deep.equal([]);
   });
   
 });
