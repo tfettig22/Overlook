@@ -15,12 +15,6 @@ body {
   height: 150px;
 }
 
-.logo {
-  height: 90%;
-  width: auto;
-  filter: invert(100)
-}
-
 .logo-container,
 .button-container {
   display: flex;
@@ -29,6 +23,12 @@ body {
   height: 100%;
   width: 20%;
   background-color: black;
+}
+
+.logo {
+  height: 90%;
+  width: 90%;
+  filter: invert(100);
 }
 
 .header {

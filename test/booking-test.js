@@ -37,14 +37,14 @@ describe('Booking', () => {
     expect(booking1.userID).to.equal(1);
     expect(booking2.userID).to.equal(2);
     expect(booking3.userID).to.equal(3);
-    expect(booking4.userID).to.equal(4);
+    expect(booking4.userID).to.equal(1);
   });
 
   it('should have a date', () => {
     expect(booking1.date).to.equal('2022/04/22');
     expect(booking2.date).to.equal('2022/01/24');
     expect(booking3.date).to.equal('2022/01/10');
-    expect(booking4.date).to.equal('2022/02/16');
+    expect(booking4.date).to.equal('2023/02/16');
   });
 
   it('should have an associated room number', () => {
