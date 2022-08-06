@@ -60,7 +60,7 @@ class Hotel {
   }
 
   determinePastOrFutureBookings() {
-    let currentDate = parseInt(new Date().toISOString().split('T')[0].split('-').join(''));
+    let currentDate = parseInt(new Date().toJSON().slice(0, 10).split('-').join(''));
     this.findCustomerBookings().forEach(booking => {
       if (parseInt(booking.date.split('/').join('')) >= currentDate) {
         this.futureBookings.push(booking);
@@ -68,6 +68,17 @@ class Hotel {
         this.pastBookings.push(booking);
       }
     });
+  }
+
+  findAvailableRooms(date, roomType) {
+    let bookedRooms = this.bookings.filter(booking => booking.date === date).map(booking => booking.roomNumber)
+    let availableRoomsByDate = this.rooms.filter(room => !bookedRooms.includes(room.number))
+    if (roomType !== undefined) {
+      let availableRoomsByType = availableRoomsByDate.filter(room => room.roomType === roomType)
+      return availableRoomsByType
+    } else {
+      return availableRoomsByDate
+    }
   }
 
 

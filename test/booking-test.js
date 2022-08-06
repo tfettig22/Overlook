@@ -43,7 +43,7 @@ describe('Booking', () => {
   it('should have a date', () => {
     expect(booking1.date).to.equal('2022/04/22');
     expect(booking2.date).to.equal('2022/01/24');
-    expect(booking3.date).to.equal('2022/01/10');
+    expect(booking3.date).to.equal('2022/01/24');
     expect(booking4.date).to.equal('2023/02/16');
   });
 
