@@ -43,7 +43,7 @@ class Hotel {
       let totalSpent = this.getRoomDetails().reduce((sum, room) => {
         return sum += room.costPerNight;
       }, 0);
-    return `$${totalSpent}`;
+    return `$${totalSpent.toFixed(2)}`;
     }
   }
 
@@ -79,6 +79,15 @@ class Hotel {
       let availableRoomsByType = availableRoomsByDate.filter(room => room.roomType === roomType);
       return availableRoomsByType;
     }
+  }
+
+  addBooking(date, roomNumber) {
+    let newBooking = {
+                      "userID": this.currentCustomer.id,
+                      "date": date,
+                      "roomNumber": parseInt(roomNumber)
+    }
+    return newBooking
   }
 
 

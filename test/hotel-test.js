@@ -223,7 +223,7 @@ describe('Hotel', () => {
 
   it('should return zero dollars if the customer does not have any bookings', () => {
     hotel.assignCustomer(customerData[3]);
-    expect(hotel.getTotalSpent()).to.equal('$0')
+    expect(hotel.getTotalSpent()).to.equal('$0.00')
   });
 
   it('should have a method to sort the customer\'s bookings by descending date', () => {

@@ -6,8 +6,11 @@
 import { getAllData } from './apiCalls';
 import './css/styles.css';
 // *** Images *** //
-import './images/turing-logo.png';
-import './images/overlook.png';
+import './images/overlookOB.png';
+import './images/single-room.png';
+import './images/junior-suite.png';
+import './images/suite.png';
+import './images/residential-suite.png';
 // *** Classes *** //
 import Customer from './classes/Customer';
 import Room from './classes/Room';
@@ -31,6 +34,7 @@ const pastBookings = document.querySelector('.past-bookings');
 const customerWelcomeMsg = document.querySelector('.customer-welcome-message');
 const customerTotalSpent = document.querySelector('.total-spent');
 const applyFiltersBtn = document.querySelector('.filter-rooms');
+const mainBookingsHeader = document.querySelector('.bookings-header');
 
 // *** Event Listeners *** //
 
@@ -38,6 +42,7 @@ window.addEventListener('load', assignAllData);
 bookARoomBtn.addEventListener('click', goToBookPage);
 myBookingsBtn.addEventListener('click', goToDashboard);
 applyFiltersBtn.addEventListener('click', goToBookPage);
+availableRooms.addEventListener('click', createNewBooking);
 
 // *** Global Variables *** //
 
@@ -47,6 +52,10 @@ let allBookings;
 let hotel;
 let selectedDate;
 let selectedRoomType;
+let bed = 'Bed';
+let bidet = 'Bidet In Room';
+let image;
+let imageAlt;
 
 // *** GET/POST *** //
 function assignAllData() {
@@ -60,7 +69,40 @@ function assignAllData() {
   });
 }
 
+function postData(newBooking) {
+  fetch('http://localhost:3001/api/v1/bookings', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newBooking)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    } else {
+      console.log(response)
+      return response.json();
+    }
+  })
+  .then(booking => {
+    console.log(booking)
+    hotel.addBooking(newBooking['date'], newBooking['roomNumber'])
+    assignAllData();
+    goToDashboard();
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
+
 // *** Functions *** //
+
+function createNewBooking(event) {
+  event.preventDefault()
+  if (event.target.classList.contains('button')) {
+  console.log(hotel.addBooking(dateSelector.value.split('-').join('/'), event.target.id))
+  postData(hotel.addBooking(dateSelector.value.split('-').join('/'), event.target.id))
+  }
+}
 
 function hide(element) {
   element.classList.add('hidden');
@@ -82,77 +124,94 @@ function initializeHotel() {
   hotel.determinePastOrFutureBookings();
 }
 
+function setRoomDetails(room) {
+  if (room.numBeds > 1) {
+    bed = 'Beds';
+  }
+  if (room.bidet === false) {
+    bidet = 'No Bidet In Room';
+  }
+  if (room.roomType === 'single room') {
+    image = "./images/single-room.png"
+    imageAlt = 'single room image'
+  }
+  if (room.roomType === 'junior suite') {
+    image = './images/junior-suite.png'
+    imageAlt = 'junior suite image'
+  }
+  if (room.roomType === 'suite') {
+    image = './images/suite.png'
+    imageAlt = 'suite image'
+  }
+  if (room.roomType === 'residential suite') {
+    image = './images/residential-suite.png'
+    imageAlt = 'residential suite image'
+  }
+}
+
+function setDashboardBookings(room) {
+  return `<article class="future-booked-room" tabindex=0>
+           <img class="future-booked-room-image" src="${image}" alt="${imageAlt}" tabindex=0>
+           <div class="date-and-room-number">
+             <p class="booked-date-booked" tabindex=0>${room.dateBooked}</p>
+             <p class="booked-room-number" tabindex=0>Room ${room.number}</p>
+           </div>
+           <div class="type-beds-bidet">
+             <p class="booked-room-type" tabindex=0>${changeToUpperCase(room.roomType)}</p>
+             <p class="booked-room-beds" tabindex=0>${room.numBeds} ${changeToUpperCase(room.bedSize)} ${bed}</p>
+             <p class="booked-room-bidet" tabindex=0>${bidet}</p>
+           </div>
+           <p class="booked-room-cost" tabindex=0>$${room.costPerNight} Per Night</p>
+         </article>`;
+}
+
+function setDashboardText() {
+  upcomingBookingsHeader.innerText = `Upcoming Bookings: ${hotel.futureBookings.length}`;
+  pastBookingsHeader.innerText = `Past Bookings: ${hotel.pastBookings.length}`;
+  mainBookingsHeader.innerText = `${hotel.currentCustomer.name}'s Overlook Dashboard`;
+  customerWelcomeMsg.innerText = `Thanks for staying with us ${hotel.currentCustomer.name.split(' ')[0]}!`
+  customerTotalSpent.innerText = `Total spent on bookings: ${hotel.getTotalSpent()}`;
+}
+
 function displayAvailableRooms(date, roomType) {
+  mainBookingsHeader.innerText = `Book your stay at the world famous Overlook Hotel`;
   availableRoomsHeader.innerText = `Available Rooms: ${hotel.findAvailableRooms(date, roomType).length}`;
   availableRooms.innerHTML = '';
-  hotel.findAvailableRooms(date, roomType).forEach(room => {
-    let bed = 'bed';
-    let bidet = 'Bidet in room';
-    if (room.numBeds > 1) {
-      bed = 'beds';
-    }
-    if (room.bidet === false) {
-      bidet = 'No bidet in room';
-    }
-    availableRooms.innerHTML +=
-    `<article class="available-room">
-      <img class="available-room-image" src="" alt="">
-      <p class="available-room-number">Room ${room.number}</p>
-      <p class="available-room-type">${room.roomType}</p>
-      <p class="available-room-beds">${room.numBeds} ${room.bedSize} ${bed}</p>
-      <p class="available-room-bidet">${bidet}</p>
-      <p class="available-room-cost">$${room.costPerNight} per night</p>
-      <button class="create-new-booking">Book This Room</button>
-    </article>`;
-  });
+  if (hotel.findAvailableRooms(date, roomType).length === 0) {
+    availableRooms.innerHTML = 
+    `<p class="no-rooms-available-message">Sorry ${hotel.currentCustomer.name.split(' ')[0]}, we are all booked up for this date/room type.</br></br> Please update your filter options, we hope there is another room that meets your needs.
+    </p>`
+  } else {
+    hotel.findAvailableRooms(date, roomType).forEach(room => {
+      setRoomDetails(room);
+      availableRooms.innerHTML +=
+      `<article class="available-room" tabindex=0>
+        <img class="available-room-image" src="${image}" alt="" tabindex=0>
+        <p class="available-room-number" tabindex=0>Room ${room.number}</p>
+        <div class="type-beds-bidet">
+          <p class="available-room-type" tabindex=0>${changeToUpperCase(room.roomType)}</p>
+          <p class="available-room-beds" tabindex=0>${room.numBeds} ${changeToUpperCase(room.bedSize)} ${bed}</p>
+          <p class="available-room-bidet" tabindex=0>${bidet}</p>
+        </div>
+        <p class="available-room-cost" tabindex=0>$${room.costPerNight} Per Night</p>
+        <button class="create-new-booking button" id="${room.number}">Book This Room</button>
+      </article>`;
+    });
+  }
 }
 
 function displayCustomerBookings() {
-  upcomingBookingsHeader.innerText = `Upcoming Bookings: ${hotel.futureBookings.length}`;
-  pastBookingsHeader.innerText = `Past Bookings: ${hotel.pastBookings.length}`;
-  customerWelcomeMsg.innerText = `Welcome ${hotel.currentCustomer.name}`;
-  customerTotalSpent.innerText = `Total spent on bookings: ${hotel.getTotalSpent()}`;
+  setDashboardText();
   upcomingBookings.innerHTML = '';
   pastBookings.innerHTML = '';
   hotel.getRoomDetails().forEach(room => {
-    let bed = 'Bed';
-    let bidet = 'Bidet In Room';
-    if (room.numBeds > 1) {
-      bed = 'Beds';
-    }
-    if (room.bidet === false) {
-      bidet = 'No Bidet In Room';
-    }
+    setRoomDetails(room);
     if (parseInt(room.dateBooked.split('/').join('')) >= parseInt(new Date().toJSON().slice(0, 10).split('-').join(''))) {
       upcomingBookings.innerHTML += 
-      `<article class="future-booked-room">
-        <img class="booked-room-image" src="" alt="">
-        <div class="date-and-room-number">
-          <p class="booked-date-booked">${room.dateBooked}</p>
-          <p class="booked-room-number">Room ${room.number}</p>
-        </div>
-        <div class="type-beds-bidet">
-          <p class="booked-room-type">${changeToUpperCase(room.roomType)}</p>
-          <p class="booked-room-beds">${room.numBeds} ${changeToUpperCase(room.bedSize)} ${bed}</p>
-          <p class="booked-room-bidet">${bidet}</p>
-        </div>
-        <p class="booked-room-cost">$${room.costPerNight} Per Night</p>
-      </article>`;
+      setDashboardBookings(room);
     } else {
       pastBookings.innerHTML +=
-      `<article class="future-booked-room">
-        <img class="booked-room-image" src="" alt="">
-        <div class="date-and-room-number">
-          <p class="booked-date-booked">${room.dateBooked}</p>
-          <p class="booked-room-number">Room ${room.number}</p>
-        </div>
-        <div class="type-beds-bidet">
-          <p class="booked-room-type">${changeToUpperCase(room.roomType)}</p>
-          <p class="booked-room-beds">${room.numBeds} ${changeToUpperCase(room.bedSize)} ${bed}</p>
-          <p class="booked-room-bidet">${bidet}</p>
-        </div>
-        <p class="booked-room-cost">$${room.costPerNight} Per Night</p>
-      </article>`;
+      setDashboardBookings(room);
     }
   });
 }
@@ -186,5 +245,3 @@ function changeToUpperCase(string) {
     })
     return capitalizedWords.join(' ');
 }
-
-console.log(changeToUpperCase('residential suite'))
