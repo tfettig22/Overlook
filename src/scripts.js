@@ -115,39 +115,45 @@ function displayCustomerBookings() {
   upcomingBookings.innerHTML = '';
   pastBookings.innerHTML = '';
   hotel.getRoomDetails().forEach(room => {
-    hotel.futureBookings.forEach(booking => {
-      let bed = 'bed';
-      let bidet = 'Bidet in room';
-      if (room.numBeds > 1) {
-        bed = 'beds';
-      }
-      if (room.bidet === false) {
-        bidet = 'No bidet in room';
-      }
-      if (room.number === booking.roomNumber) {
-        upcomingBookings.innerHTML += 
-        `<article class="booked-room">
+    let bed = 'Bed';
+    let bidet = 'Bidet In Room';
+    if (room.numBeds > 1) {
+      bed = 'Beds';
+    }
+    if (room.bidet === false) {
+      bidet = 'No Bidet In Room';
+    }
+    if (parseInt(room.dateBooked.split('/').join('')) >= parseInt(new Date().toJSON().slice(0, 10).split('-').join(''))) {
+      upcomingBookings.innerHTML += 
+      `<article class="future-booked-room">
         <img class="booked-room-image" src="" alt="">
-        <p class="booked-date-booked">${room.dateBooked}</p>
-        <p class="booked-room-number">Room ${room.number}</p>
-        <p class="booked-room-type">${room.roomType}</p>
-        <p class="booked-room-beds">${room.numBeds} ${room.bedSize} ${bed}</p>
-        <p class="booked-room-bidet">${bidet}</p>
-        <p class="booked-room-cost">$${room.costPerNight} per night</p>
+        <div class="date-and-room-number">
+          <p class="booked-date-booked">${room.dateBooked}</p>
+          <p class="booked-room-number">Room ${room.number}</p>
+        </div>
+        <div class="type-beds-bidet">
+          <p class="booked-room-type">${changeToUpperCase(room.roomType)}</p>
+          <p class="booked-room-beds">${room.numBeds} ${changeToUpperCase(room.bedSize)} ${bed}</p>
+          <p class="booked-room-bidet">${bidet}</p>
+        </div>
+        <p class="booked-room-cost">$${room.costPerNight} Per Night</p>
       </article>`;
-      } else {
-        pastBookings.innerHTML +=
-        `<article class="booked-room">
+    } else {
+      pastBookings.innerHTML +=
+      `<article class="future-booked-room">
         <img class="booked-room-image" src="" alt="">
-        <p class="booked-date-booked">${room.dateBooked}</p>
-        <p class="booked-room-number">Room ${room.number}</p>
-        <p class="booked-room-type">${room.roomType}</p>
-        <p class="booked-room-beds">${room.numBeds} ${room.bedSize} ${bed}</p>
-        <p class="booked-room-bidet">${bidet}</p>
-        <p class="booked-room-cost">$${room.costPerNight} per night</p>
+        <div class="date-and-room-number">
+          <p class="booked-date-booked">${room.dateBooked}</p>
+          <p class="booked-room-number">Room ${room.number}</p>
+        </div>
+        <div class="type-beds-bidet">
+          <p class="booked-room-type">${changeToUpperCase(room.roomType)}</p>
+          <p class="booked-room-beds">${room.numBeds} ${changeToUpperCase(room.bedSize)} ${bed}</p>
+          <p class="booked-room-bidet">${bidet}</p>
+        </div>
+        <p class="booked-room-cost">$${room.costPerNight} Per Night</p>
       </article>`;
-      }
-    });
+    }
   });
 }
 
@@ -172,3 +178,13 @@ function goToDashboard() {
   show(bookARoomBtn);
   displayCustomerBookings();
 }
+
+function changeToUpperCase(string) {
+    let wordsInName = string.split(' ');
+    let capitalizedWords = wordsInName.map(word => {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    return capitalizedWords.join(' ');
+}
+
+console.log(changeToUpperCase('residential suite'))
