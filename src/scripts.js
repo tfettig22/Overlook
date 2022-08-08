@@ -180,7 +180,7 @@ function setDashboardText() {
 }
 
 function displayAvailableRooms(date, roomType) {
-  mainBookingsHeader.innerText = `Book your stay at the Mile High Hotel, the official home of the Denver Broncos`;
+  mainBookingsHeader.innerText = `Book your stay at the Mile High Hotel: Home of the Denver Broncos`;
   availableRoomsHeader.innerText = `Available Rooms: ${hotel.findAvailableRooms(date, roomType).length}`;
   availableRooms.innerHTML = '';
   if (hotel.findAvailableRooms(date, roomType).length === 0) {
