@@ -6,7 +6,7 @@
 import { getAllData } from './apiCalls';
 import './css/styles.css';
 // *** Images *** //
-import './images/overlookOB.png';
+import './images/MHH.png';
 import './images/single-room.png';
 import './images/junior-suite.png';
 import './images/suite.png';
@@ -35,6 +35,7 @@ const customerWelcomeMsg = document.querySelector('.customer-welcome-message');
 const customerTotalSpent = document.querySelector('.total-spent');
 const applyFiltersBtn = document.querySelector('.filter-rooms');
 const mainBookingsHeader = document.querySelector('.bookings-header');
+const successfulBookingMsg = document.querySelector('.successful-booking-container');
 
 // *** Event Listeners *** //
 
@@ -79,15 +80,14 @@ function postData(newBooking) {
     if (!response.ok) {
       throw new Error(response.statusText);
     } else {
-      console.log(response)
       return response.json();
     }
   })
   .then(booking => {
-    console.log(booking)
     hotel.addBooking(newBooking['date'], newBooking['roomNumber'])
     assignAllData();
-    goToDashboard();
+    displaySuccessMsg();
+    let timeout = setTimeout(goToDashboard, 3000);
   })
   .catch(err => {
     console.log(err)
@@ -99,9 +99,15 @@ function postData(newBooking) {
 function createNewBooking(event) {
   event.preventDefault()
   if (event.target.classList.contains('button')) {
-  console.log(hotel.addBooking(dateSelector.value.split('-').join('/'), event.target.id))
   postData(hotel.addBooking(dateSelector.value.split('-').join('/'), event.target.id))
   }
+}
+
+function displaySuccessMsg() {
+  hide(dashboardContainer);
+  hide(bookARoomContainer);
+  hide(mainBookingsHeader)
+  show(successfulBookingMsg);
 }
 
 function hide(element) {
@@ -151,30 +157,30 @@ function setRoomDetails(room) {
 
 function setDashboardBookings(room) {
   return `<article class="future-booked-room" tabindex=0>
-           <img class="future-booked-room-image" src="${image}" alt="${imageAlt}" tabindex=0>
+           <img class="future-booked-room-image" src="${image}" alt="${imageAlt}">
            <div class="date-and-room-number">
-             <p class="booked-date-booked" tabindex=0>${room.dateBooked}</p>
-             <p class="booked-room-number" tabindex=0>Room ${room.number}</p>
+             <p class="booked-date-booked">${room.dateBooked}</p>
+             <p class="booked-room-number">Room ${room.number}</p>
            </div>
            <div class="type-beds-bidet">
-             <p class="booked-room-type" tabindex=0>${changeToUpperCase(room.roomType)}</p>
-             <p class="booked-room-beds" tabindex=0>${room.numBeds} ${changeToUpperCase(room.bedSize)} ${bed}</p>
-             <p class="booked-room-bidet" tabindex=0>${bidet}</p>
+             <p class="booked-room-type">${changeToUpperCase(room.roomType)}</p>
+             <p class="booked-room-beds">${room.numBeds} ${changeToUpperCase(room.bedSize)} ${bed}</p>
+             <p class="booked-room-bidet">${bidet}</p>
            </div>
-           <p class="booked-room-cost" tabindex=0>$${room.costPerNight} Per Night</p>
+           <p class="booked-room-cost">$${room.costPerNight} Per Night</p>
          </article>`;
 }
 
 function setDashboardText() {
   upcomingBookingsHeader.innerText = `Upcoming Bookings: ${hotel.futureBookings.length}`;
   pastBookingsHeader.innerText = `Past Bookings: ${hotel.pastBookings.length}`;
-  mainBookingsHeader.innerText = `${hotel.currentCustomer.name}'s Overlook Dashboard`;
+  mainBookingsHeader.innerText = `${hotel.currentCustomer.name}'s Mile High Dashboard`;
   customerWelcomeMsg.innerText = `Thanks for staying with us ${hotel.currentCustomer.name.split(' ')[0]}!`
   customerTotalSpent.innerText = `Total spent on bookings: ${hotel.getTotalSpent()}`;
 }
 
 function displayAvailableRooms(date, roomType) {
-  mainBookingsHeader.innerText = `Book your stay at the world famous Overlook Hotel`;
+  mainBookingsHeader.innerText = `Book your stay at the Mile High Hotel, the official home of the Denver Broncos`;
   availableRoomsHeader.innerText = `Available Rooms: ${hotel.findAvailableRooms(date, roomType).length}`;
   availableRooms.innerHTML = '';
   if (hotel.findAvailableRooms(date, roomType).length === 0) {
@@ -186,14 +192,14 @@ function displayAvailableRooms(date, roomType) {
       setRoomDetails(room);
       availableRooms.innerHTML +=
       `<article class="available-room" tabindex=0>
-        <img class="available-room-image" src="${image}" alt="" tabindex=0>
-        <p class="available-room-number" tabindex=0>Room ${room.number}</p>
+        <img class="available-room-image" src="${image}" alt="${imageAlt}">
+        <p class="available-room-number">Room ${room.number}</p>
         <div class="type-beds-bidet">
-          <p class="available-room-type" tabindex=0>${changeToUpperCase(room.roomType)}</p>
-          <p class="available-room-beds" tabindex=0>${room.numBeds} ${changeToUpperCase(room.bedSize)} ${bed}</p>
-          <p class="available-room-bidet" tabindex=0>${bidet}</p>
+          <p class="available-room-type">${changeToUpperCase(room.roomType)}</p>
+          <p class="available-room-beds">${room.numBeds} ${changeToUpperCase(room.bedSize)} ${bed}</p>
+          <p class="available-room-bidet">${bidet}</p>
         </div>
-        <p class="available-room-cost" tabindex=0>$${room.costPerNight} Per Night</p>
+        <p class="available-room-cost">$${room.costPerNight} Per Night</p>
         <button class="create-new-booking button" id="${room.number}">Book This Room</button>
       </article>`;
     });
@@ -233,8 +239,10 @@ function goToBookPage() {
 function goToDashboard() {
   hide(bookARoomContainer);
   hide(myBookingsBtn);
+  hide(successfulBookingMsg);
   show(dashboardContainer);
   show(bookARoomBtn);
+  show(mainBookingsHeader);
   displayCustomerBookings();
 }
 
