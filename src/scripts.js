@@ -16,6 +16,7 @@ import Customer from './classes/Customer';
 import Room from './classes/Room';
 import Booking from './classes/Booking';
 import Hotel from './classes/Hotel';
+import validUserNames from './validUserNames';
 
 // *** Query Selectors *** //
 
@@ -36,18 +37,27 @@ const customerTotalSpent = document.querySelector('.total-spent');
 const applyFiltersBtn = document.querySelector('.filter-rooms');
 const mainBookingsHeader = document.querySelector('.bookings-header');
 const successfulBookingMsg = document.querySelector('.successful-booking-container');
+const loginPage = document.querySelector('.login-page');
+const usernameInput = document.querySelector('.username-input');
+const passwordInput = document.querySelector('.password-input');
+const loginBtn = document.querySelector('.login-submit');
+const errorMsg = document.querySelector('.error-message');
+const mainPage = document.querySelector('.main-page');
+const mainHeader = document.querySelector('.header-container');
 
 // *** Event Listeners *** //
 
-window.addEventListener('load', assignAllData);
+// window.addEventListener('load', assignAllData);
 bookARoomBtn.addEventListener('click', goToBookPage);
 myBookingsBtn.addEventListener('click', goToDashboard);
 applyFiltersBtn.addEventListener('click', goToBookPage);
 availableRooms.addEventListener('click', createNewBooking);
+loginBtn.addEventListener('click', logInCustomer);
 
 // *** Global Variables *** //
 
-let allCustomers;
+let customer;
+let currentCustomer;
 let allRooms;
 let allBookings;
 let hotel;
@@ -59,15 +69,15 @@ let image;
 let imageAlt;
 
 // *** GET/POST *** //
-function assignAllData() {
-  getAllData('customers', 'rooms', 'bookings').then(responses => {
-    allCustomers = responses[0].customers.map(customer => new Customer(customer));
+function assignAllData(customer) {
+  getAllData(customer, 'rooms', 'bookings').then(responses => {
+    currentCustomer = new Customer(responses[0]);
     allRooms = responses[1].rooms.map(room => new Room(room));
     allBookings = responses[2].bookings.map(booking => new Booking(booking));
     initializeHotel();
     setCurrentDate();
     displayCustomerBookings();
-  });
+  })
 }
 
 function postData(newBooking) {
@@ -85,7 +95,7 @@ function postData(newBooking) {
   })
   .then(booking => {
     hotel.addBooking(newBooking['date'], newBooking['roomNumber'])
-    assignAllData();
+    assignAllData(customer);
     displaySuccessMsg();
     let timeout = setTimeout(goToDashboard, 3000);
   })
@@ -95,6 +105,21 @@ function postData(newBooking) {
 }
 
 // *** Functions *** //
+
+function logInCustomer() {
+  if (passwordInput.value === 'overlook2021' && validUserNames.includes(usernameInput.value)) {
+    customer = usernameInput.value.split('r').join('rs/')
+    assignAllData(customer);
+    goToDashboard();
+  } else {
+    errorMsg.innerText = ''
+    let timeout = setTimeout(showErrorMsg, 250)
+  }
+}
+
+function showErrorMsg() {
+  errorMsg.innerText = 'Invalid username/password, please try again'
+}
 
 function createNewBooking(event) {
   event.preventDefault()
@@ -108,6 +133,7 @@ function displaySuccessMsg() {
   hide(bookARoomContainer);
   hide(mainBookingsHeader)
   show(successfulBookingMsg);
+  displayCustomerBookings();
 }
 
 function hide(element) {
@@ -126,7 +152,7 @@ function setCurrentDate() {
 
 function initializeHotel() {
   hotel = new Hotel(allRooms, allBookings);
-  hotel.assignCustomer(allCustomers[9]);
+  hotel.assignCustomer(currentCustomer);
   hotel.determinePastOrFutureBookings();
 }
 
@@ -180,7 +206,7 @@ function setDashboardText() {
 }
 
 function displayAvailableRooms(date, roomType) {
-  mainBookingsHeader.innerText = `Book your stay at the Mile High Hotel, the official home of the Denver Broncos`;
+  mainBookingsHeader.innerText = `Book your stay at the Mile High Hotel: Home of the Denver Broncos`;
   availableRoomsHeader.innerText = `Available Rooms: ${hotel.findAvailableRooms(date, roomType).length}`;
   availableRooms.innerHTML = '';
   if (hotel.findAvailableRooms(date, roomType).length === 0) {
@@ -240,10 +266,13 @@ function goToDashboard() {
   hide(bookARoomContainer);
   hide(myBookingsBtn);
   hide(successfulBookingMsg);
+  hide(loginPage);
+  show(mainPage);
+  show(mainHeader);
   show(dashboardContainer);
   show(bookARoomBtn);
   show(mainBookingsHeader);
-  displayCustomerBookings();
+  // displayCustomerBookings();
 }
 
 function changeToUpperCase(string) {
