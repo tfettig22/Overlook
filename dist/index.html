@@ -62,22 +62,25 @@
             <p class="available-rooms-header">Available Rooms:</p>
             <section class="available-rooms">Inner HTML Bookings</section>
           </section>
-          <section class="room-selection-container">
-            <p class="room-select-prompt">Please select a date and room type:</p>
-            <section class="type-and-date-container">
-              <label for="room-type-input" class="label">Filter by Room Type</label>
-              <select name="room type" class="room-type-selector">
-                <option value="any">Any</option>
-                <option value="single room">Single Room</option>
-                <option value="junior suite">Junior Suite</option>
-                <option value="suite">Suite</option>
-                <option value="residential suite">Residential Suite</option>
-              </select>
-              <label for="date-input" class="label">Filter By Date:</label>
-              <input type="date" class="date-selector" name="trip-start" value="" min="">
+          <div class="room-select-emblem-container">
+            <section class="room-selection-container">
+              <p class="room-select-prompt">Please select a date and room type:</p>
+              <section class="type-and-date-container">
+                <label for="room-type-input" class="label">Filter by Room Type</label>
+                <select name="room type" class="room-type-selector">
+                  <option value="any">Any</option>
+                  <option value="single room">Single Room</option>
+                  <option value="junior suite">Junior Suite</option>
+                  <option value="suite">Suite</option>
+                  <option value="residential suite">Residential Suite</option>
+                </select>
+                <label for="date-input" class="label">Filter By Date:</label>
+                <input type="date" class="date-selector" name="trip-start" value="" min="">
+              </section>
+              <button class="filter-rooms">Apply Filters</button>
             </section>
-            <button class="filter-rooms">Apply Filters</button>
-          </section>
+            <img class="emblem" src="./images/broncos-emblem.png" alt="broncos emblem">
+          </div>
         </section>
         <section class="successful-booking-container hidden">
           <p class="successful-booking-message">Your room has been booked! Please refer to the upcoming bookings section of your dashboard to see the confirmation. We hope you enjoy your stay at the Mile High Hotel.</p>

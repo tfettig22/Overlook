@@ -9,6 +9,7 @@ import './images/single-room.png';
 import './images/junior-suite.png';
 import './images/suite.png';
 import './images/residential-suite.png';
+import './images/broncos-emblem.png';
 // *** Classes *** //
 import Customer from './classes/Customer';
 import Room from './classes/Room';
@@ -67,8 +68,8 @@ let allBookings;
 let hotel;
 let selectedDate;
 let selectedRoomType;
-let bed = 'Bed';
-let bidet = 'Bidet In Room';
+let bed;
+let bidet;
 let image;
 let imageAlt;
 
@@ -101,7 +102,7 @@ function postData(newBooking) {
     hotel.addBooking(newBooking['date'], newBooking['roomNumber'])
     assignAllData(customer);
     displaySuccessMsg();
-    let timeout = setTimeout(goToDashboard, 3000);
+    let timeout = setTimeout(goToDashboard, 2500);
   })
   .catch(err => {
     console.log(err);
@@ -161,8 +162,14 @@ function initializeHotel() {
 }
 
 function setRoomDetails(room) {
+  if (room.numBeds === 1) {
+    bed = 'Bed';
+  }
   if (room.numBeds > 1) {
     bed = 'Beds';
+  }
+  if (room.bidet === true) {
+    bidet = "Bidet In Room";
   }
   if (room.bidet === false) {
     bidet = 'No Bidet In Room';
