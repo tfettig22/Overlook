@@ -48,7 +48,8 @@ let validUserNames = [
   'customer47',
   'customer48',
   'customer49',
-  'customer50'
+  'customer50',
+  'manager'
 ];
 
 export default validUserNames;

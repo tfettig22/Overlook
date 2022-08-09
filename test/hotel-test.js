@@ -18,7 +18,7 @@ describe('Hotel', () => {
   let hotel;
 
   beforeEach(() => {
-    hotel = new Hotel(roomData, bookingData)
+    hotel = new Hotel(roomData, bookingData);
   });
 
   it('should be a function', () => {
@@ -174,7 +174,7 @@ describe('Hotel', () => {
   });
 
   it('should have a method to get all the details for a room that the customer has booked', () => {
-    hotel.assignCustomer(customerData[0])
+    hotel.assignCustomer(customerData[0]);
     expect(hotel.getRoomDetails()).to.deep.equal([
       {
         number: 1,
@@ -223,43 +223,59 @@ describe('Hotel', () => {
 
   it('should return zero dollars if the customer does not have any bookings', () => {
     hotel.assignCustomer(customerData[3]);
-    expect(hotel.getTotalSpent()).to.equal('$0.00')
+    expect(hotel.getTotalSpent()).to.equal('$0.00');
   });
 
   it('should have a method to sort the customer\'s bookings by descending date', () => {
     hotel.assignCustomer(customerData[0]);
-    let customerBookings = hotel.findCustomerBookings()
+    let customerBookings = hotel.getRoomDetails();
     expect(hotel.sortBookingsByDateDescending(customerBookings)).to.deep.equal([
       {
-      id: "5fwrgu4i7k55hl6t7",
-      userID: 1,
-      date: "2023/02/16",
-      roomNumber: 4
+      number: 4,
+      roomType: 'junior suite',
+      bidet: true,
+      bedSize: 'queen',
+      numBeds: 1,
+      costPerNight: 397.02,
+      dateBooked: '2023/02/16',
+      bookingID: '5fwrgu4i7k55hl6t7'
       },
       {
-      id: "5fwrgu4i7k55hl6sz",
-      userID: 1,
-      date: "2022/04/22",
-      roomNumber: 1
+      number: 1,
+      roomType: 'residential suite',
+      bidet: true,
+      bedSize: 'queen',
+      numBeds: 1,
+      costPerNight: 358.4,
+      dateBooked: '2022/04/22',
+      bookingID: '5fwrgu4i7k55hl6sz'
       }
     ]);
   });
 
   it('should have a method to sort the customer\'s bookings by ascending date', () => {
     hotel.assignCustomer(customerData[0]);
-    let customerBookings = hotel.findCustomerBookings()
+    let customerBookings = hotel.getRoomDetails();
     expect(hotel.sortBookingsByDateAscending(customerBookings)).to.deep.equal([
       {
-      id: "5fwrgu4i7k55hl6sz",
-      userID: 1,
-      date: "2022/04/22",
-      roomNumber: 1
+      number: 1,
+      roomType: 'residential suite',
+      bidet: true,
+      bedSize: 'queen',
+      numBeds: 1,
+      costPerNight: 358.4,
+      dateBooked: '2022/04/22',
+      bookingID: '5fwrgu4i7k55hl6sz'
       },
       {
-      id: "5fwrgu4i7k55hl6t7",
-      userID: 1,
-      date: "2023/02/16",
-      roomNumber: 4
+      number: 4,
+      roomType: 'junior suite',
+      bidet: true,
+      bedSize: 'queen',
+      numBeds: 1,
+      costPerNight: 397.02,
+      dateBooked: '2023/02/16',
+      bookingID: '5fwrgu4i7k55hl6t7'
       }
     ]);
   });
@@ -269,19 +285,27 @@ describe('Hotel', () => {
     hotel.determinePastOrFutureBookings();
     expect(hotel.pastBookings).to.deep.equal([
       {
-      id: "5fwrgu4i7k55hl6sz",
-      userID: 1,
-      date: "2022/04/22",
-      roomNumber: 1
+      number: 1,
+      roomType: 'residential suite',
+      bidet: true,
+      bedSize: 'queen',
+      numBeds: 1,
+      costPerNight: 358.4,
+      dateBooked: '2022/04/22',
+      bookingID: '5fwrgu4i7k55hl6sz'
       }
     ]);
 
     expect(hotel.futureBookings).to.deep.equal([
       {
-      id: "5fwrgu4i7k55hl6t7",
-      userID: 1,
-      date: "2023/02/16",
-      roomNumber: 4
+      number: 4,
+      roomType: 'junior suite',
+      bidet: true,
+      bedSize: 'queen',
+      numBeds: 1,
+      costPerNight: 397.02,
+      dateBooked: '2023/02/16',
+      bookingID: '5fwrgu4i7k55hl6t7'
       }
     ]);
   });

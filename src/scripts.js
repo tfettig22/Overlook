@@ -1,10 +1,8 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
 // *** Imports *** //
 
 import { getAllData } from './apiCalls';
 import './css/styles.css';
+import validUserNames from './validUserNames';
 // *** Images *** //
 import './images/MHH.png';
 import './images/single-room.png';
@@ -16,7 +14,6 @@ import Customer from './classes/Customer';
 import Room from './classes/Room';
 import Booking from './classes/Booking';
 import Hotel from './classes/Hotel';
-import validUserNames from './validUserNames';
 
 // *** Query Selectors *** //
 
@@ -44,15 +41,22 @@ const loginBtn = document.querySelector('.login-submit');
 const errorMsg = document.querySelector('.error-message');
 const mainPage = document.querySelector('.main-page');
 const mainHeader = document.querySelector('.header-container');
+const logoutButton = document.querySelector('.log-out');
+const logoutConfirm = document.querySelector('.log-out-confirm');
+const yes = document.querySelector('.yes');
+const no = document.querySelector('.no');
+
 
 // *** Event Listeners *** //
 
-// window.addEventListener('load', assignAllData);
 bookARoomBtn.addEventListener('click', goToBookPage);
 myBookingsBtn.addEventListener('click', goToDashboard);
 applyFiltersBtn.addEventListener('click', goToBookPage);
 availableRooms.addEventListener('click', createNewBooking);
 loginBtn.addEventListener('click', logInCustomer);
+logoutButton.addEventListener('click', showLogoutConfirm);
+yes.addEventListener('click', logout);
+no.addEventListener('click', hideLogoutConfirm);
 
 // *** Global Variables *** //
 
@@ -100,7 +104,7 @@ function postData(newBooking) {
     let timeout = setTimeout(goToDashboard, 3000);
   })
   .catch(err => {
-    console.log(err)
+    console.log(err);
   })
 }
 
@@ -108,30 +112,30 @@ function postData(newBooking) {
 
 function logInCustomer() {
   if (passwordInput.value === 'overlook2021' && validUserNames.includes(usernameInput.value)) {
-    customer = usernameInput.value.split('r').join('rs/')
+    customer = usernameInput.value.split('r').join('rs/');
     assignAllData(customer);
     goToDashboard();
   } else {
     errorMsg.innerText = ''
-    let timeout = setTimeout(showErrorMsg, 250)
+    let timeout = setTimeout(showErrorMsg, 250);
   }
 }
 
 function showErrorMsg() {
-  errorMsg.innerText = 'Invalid username/password, please try again'
+  errorMsg.innerText = 'Invalid username/password, please try again';
 }
 
 function createNewBooking(event) {
-  event.preventDefault()
+  event.preventDefault();
   if (event.target.classList.contains('button')) {
-  postData(hotel.addBooking(dateSelector.value.split('-').join('/'), event.target.id))
+  postData(hotel.addBooking(dateSelector.value.split('-').join('/'), event.target.id));
   }
 }
 
 function displaySuccessMsg() {
   hide(dashboardContainer);
   hide(bookARoomContainer);
-  hide(mainBookingsHeader)
+  hide(mainBookingsHeader);
   show(successfulBookingMsg);
   displayCustomerBookings();
 }
@@ -164,20 +168,20 @@ function setRoomDetails(room) {
     bidet = 'No Bidet In Room';
   }
   if (room.roomType === 'single room') {
-    image = "./images/single-room.png"
-    imageAlt = 'single room image'
+    image = "./images/single-room.png";
+    imageAlt = 'single room image';
   }
   if (room.roomType === 'junior suite') {
-    image = './images/junior-suite.png'
-    imageAlt = 'junior suite image'
+    image = './images/junior-suite.png';
+    imageAlt = 'junior suite image';
   }
   if (room.roomType === 'suite') {
-    image = './images/suite.png'
-    imageAlt = 'suite image'
+    image = './images/suite.png';
+    imageAlt = 'suite image';
   }
   if (room.roomType === 'residential suite') {
-    image = './images/residential-suite.png'
-    imageAlt = 'residential suite image'
+    image = './images/residential-suite.png';
+    imageAlt = 'residential suite image';
   }
 }
 
@@ -201,7 +205,7 @@ function setDashboardText() {
   upcomingBookingsHeader.innerText = `Upcoming Bookings: ${hotel.futureBookings.length}`;
   pastBookingsHeader.innerText = `Past Bookings: ${hotel.pastBookings.length}`;
   mainBookingsHeader.innerText = `${hotel.currentCustomer.name}'s Mile High Dashboard`;
-  customerWelcomeMsg.innerText = `Thanks for staying with us ${hotel.currentCustomer.name.split(' ')[0]}!`
+  customerWelcomeMsg.innerText = `Thanks for staying with us ${hotel.currentCustomer.name.split(' ')[0]}!`;
   customerTotalSpent.innerText = `Total spent on bookings: ${hotel.getTotalSpent()}`;
 }
 
@@ -212,7 +216,7 @@ function displayAvailableRooms(date, roomType) {
   if (hotel.findAvailableRooms(date, roomType).length === 0) {
     availableRooms.innerHTML = 
     `<p class="no-rooms-available-message">Sorry ${hotel.currentCustomer.name.split(' ')[0]}, we are all booked up for this date/room type.</br></br> Please update your filter options, we hope there is another room that meets your needs.
-    </p>`
+    </p>`;
   } else {
     hotel.findAvailableRooms(date, roomType).forEach(room => {
       setRoomDetails(room);
@@ -236,15 +240,15 @@ function displayCustomerBookings() {
   setDashboardText();
   upcomingBookings.innerHTML = '';
   pastBookings.innerHTML = '';
-  hotel.getRoomDetails().forEach(room => {
+  hotel.sortBookingsByDateAscending(hotel.futureBookings).forEach(room => {
     setRoomDetails(room);
-    if (parseInt(room.dateBooked.split('/').join('')) >= parseInt(new Date().toJSON().slice(0, 10).split('-').join(''))) {
-      upcomingBookings.innerHTML += 
-      setDashboardBookings(room);
-    } else {
-      pastBookings.innerHTML +=
-      setDashboardBookings(room);
-    }
+    upcomingBookings.innerHTML += 
+    setDashboardBookings(room);
+  });
+  hotel.sortBookingsByDateDescending(hotel.pastBookings).forEach(room => {
+    setRoomDetails(room);
+    pastBookings.innerHTML +=
+    setDashboardBookings(room);
   });
 }
 
@@ -272,7 +276,6 @@ function goToDashboard() {
   show(dashboardContainer);
   show(bookARoomBtn);
   show(mainBookingsHeader);
-  // displayCustomerBookings();
 }
 
 function changeToUpperCase(string) {
@@ -281,4 +284,16 @@ function changeToUpperCase(string) {
       return word.charAt(0).toUpperCase() + word.slice(1);
     })
     return capitalizedWords.join(' ');
+}
+
+function showLogoutConfirm() {
+  show(logoutConfirm);
+}
+
+function hideLogoutConfirm() {
+  hide(logoutConfirm);
+}
+
+function logout() {
+  location.reload();
 }

@@ -1,5 +1,4 @@
 * {
-  /* border: 1px solid red; */
   margin: 0;
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -38,8 +37,30 @@ button:hover {
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 20%;
+  /* width: 20%; */
   background-color: black;
+}
+
+.logo-container {
+  width: 20%;
+}
+
+.button-container {
+  width: 15%;
+}
+
+.log-out-container {
+  display: flex;
+  height: 100%;
+  width: 5%;
+  background-color: black;
+}
+
+.log-out {
+  height: 20%;
+  width: 100%;
+  margin: 10px 10px 0px 0px;
+  border-radius: 10px;
 }
 
 .logo {
@@ -410,6 +431,44 @@ button:hover {
   text-shadow: 1px 0 1px black, -1px 0 1px black, 0 1px 1px black, 0 -1px 1px black;
   color: red;
 }
+
+.log-out-confirm {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  border: 5px solid #021A93;
+  box-shadow: 4px 0 4px #FB4F14, -4px 0 4px #FB4F14, 0 4px 4px #FB4F14, 0 -4px 4px #FB4F14;
+  height: 150px;
+  width: 400px;
+  transform: translateX(183%) translateY(150%);
+  background-color: white;
+}
+
+.confirm-prompt {
+  height: 25%;
+  width: 100%;
+  font-size: 1.5em;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.yes-no-divider {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60%;
+  width: 100%;
+}
+
+.yes,
+.no {
+  height: 30%;
+  width: 30%;
+  margin: 0px 30px 0px 30px;
+  border-radius: 10px;
+}
+
+
 
 .hidden {
   display: none;

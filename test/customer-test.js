@@ -27,10 +27,10 @@ describe('Customer', () => {
   });
 
   it('should have an ID', () => {
-    expect(customer1.id).to.equal(1)
-    expect(customer2.id).to.equal(2)
-    expect(customer3.id).to.equal(3)
-    expect(customer4.id).to.equal(4)
+    expect(customer1.id).to.equal(1);
+    expect(customer2.id).to.equal(2);
+    expect(customer3.id).to.equal(3);
+    expect(customer4.id).to.equal(4);
   });
 
   it('should have a name', () => {

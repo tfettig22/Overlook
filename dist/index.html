@@ -1,82 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>THE MILE HIGH HOTEL</title>
-</head>
-<body>
-  <section class="login-page">
-    <section class="login-box">
-      <p class="login-prompt">Welcome to the Mile High Hotel </br> Please enter your username and password to log in:</p>
-      <label for="username-input-box" class="username">Username:</label>
-      <input class="username-input" type="text" name="username" size="13" placeholder="hint: customer01">
-      <label for="password-input-box" class="password">Password:</label>
-      <input class="password-input" type="text" name="password" size="13" placeholder="hint: overlook2021">
-      <p class="error-message"></p>
-      <button class="login-submit">Let's Ride!</button>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE MILE HIGH HOTEL</title>
+  </head>
+  <body>
+    <section class="log-out-confirm hidden">
+      <p class="confirm-prompt">Are you sure you want to log out?</p>
+      <div class="yes-no-divider">
+        <button class="yes">Yes</button>
+       <button class="no">No</button>
+      </div>
     </section>
-  </section>
-  <header class="header-container hidden">
-    <div class="logo-container">
-      <img class="logo" src="./images/MHH.png" alt="MHH logo">
-    </div>
-    <section class="header">
-      <h1 class="main-header">The Mile High Hotel</h1>
+    <section class="login-page">
+      <section class="login-box">
+        <p class="login-prompt">Welcome to the Mile High Hotel </br> Please enter your username and password to log in:</p>
+        <label for="username-input-box" class="username">Username:</label>
+        <input class="username-input" type="text" name="username" size="13" placeholder="hint: customer01">
+        <label for="password-input-box" class="password">Password:</label>
+        <input class="password-input" type="text" name="password" size="13" placeholder="hint: overlook2021">
+        <p class="error-message"></p>
+        <button class="login-submit">Let's Ride!</button>
+      </section>
     </section>
-    <div class="button-container">
-      <button class="go-to-book-page hidden">Book a Room</button>
-      <button class="go-to-dashboard hidden">My Bookings</button>
-    </div>
-  </header>
-  <main>
-    <section class="main-page hidden">
-      <h2 class="bookings-header">My Bookings Dashboard / Reserve A New Booking</h2>
-      <section class="dashboard-container">
-        <section class="upcoming-bookings-container">
-          <p class="upcoming-bookings-header">Upcoming Bookings:</p>
-          <section class="upcoming-bookings">Inner HTML Bookings:</section>
-        </section>
-        <section class="customer-info-container">
-          <h3 class="customer-welcome-message">Welcome ${customer name}</h3>
-          <section class="past-bookings-container">
-            <p class="past-bookings-header">Past Bookings:</p>
-            <section class="past-bookings">Inner HTML Bookings:</section>
-            <p class="total-spent">Total spent on bookings: $$</p>
+    <header class="header-container hidden">
+      <div class="logo-container">
+        <img class="logo" src="./images/MHH.png" alt="MHH logo">
+      </div>
+      <section class="header">
+        <h1 class="main-header">The Mile High Hotel</h1>
+      </section>
+      <div class="button-container">
+        <button class="go-to-book-page hidden">Book a Room</button>
+        <button class="go-to-dashboard hidden">My Bookings</button>
+      </div>
+      <div class="log-out-container">
+        <button class="log-out">Log Out</button>
+      </div>
+    </header>
+    <main>
+      <section class="main-page hidden">
+        <h2 class="bookings-header">My Bookings Dashboard / Reserve A New Booking</h2>
+        <section class="dashboard-container">
+          <section class="upcoming-bookings-container">
+            <p class="upcoming-bookings-header">Upcoming Bookings:</p>
+            <section class="upcoming-bookings">Inner HTML Bookings:</section>
+          </section>
+          <section class="customer-info-container">
+            <h3 class="customer-welcome-message">Welcome ${customer name}</h3>
+            <section class="past-bookings-container">
+              <p class="past-bookings-header">Past Bookings:</p>
+              <section class="past-bookings">Inner HTML Bookings:</section>
+              <p class="total-spent">Total spent on bookings: $$</p>
+            </section>
           </section>
         </section>
-      </section>
-      <section class="book-a-room-container hidden">
-        <section class="available-rooms-container">
-          <p class="available-rooms-header">Available Rooms:</p>
-          <section class="available-rooms">Inner HTML Bookings</section>
-        </section>
-        <section class="room-selection-container">
-          <p class="room-select-prompt">Please select a date and room type:</p>
-          <section class="type-and-date-container">
-            <label for="room-type-input" class="label">Filter by Room Type</label>
-            <select name="room type" class="room-type-selector">
-              <option value="any">Any</option>
-              <option value="single room">Single Room</option>
-              <option value="junior suite">Junior Suite</option>
-              <option value="suite">Suite</option>
-              <option value="residential suite">Residential Suite</option>
-            </select>
-            <label for="date-input" class="label">Filter By Date:</label>
-            <input type="date" class="date-selector" name="trip-start" value="" min="">
+        <section class="book-a-room-container hidden">
+          <section class="available-rooms-container">
+            <p class="available-rooms-header">Available Rooms:</p>
+            <section class="available-rooms">Inner HTML Bookings</section>
           </section>
-          <button class="filter-rooms">Apply Filters</button>
+          <section class="room-selection-container">
+            <p class="room-select-prompt">Please select a date and room type:</p>
+            <section class="type-and-date-container">
+              <label for="room-type-input" class="label">Filter by Room Type</label>
+              <select name="room type" class="room-type-selector">
+                <option value="any">Any</option>
+                <option value="single room">Single Room</option>
+                <option value="junior suite">Junior Suite</option>
+                <option value="suite">Suite</option>
+                <option value="residential suite">Residential Suite</option>
+              </select>
+              <label for="date-input" class="label">Filter By Date:</label>
+              <input type="date" class="date-selector" name="trip-start" value="" min="">
+            </section>
+            <button class="filter-rooms">Apply Filters</button>
+          </section>
+        </section>
+        <section class="successful-booking-container hidden">
+          <p class="successful-booking-message">Your room has been booked! Please refer to the upcoming bookings section of your dashboard to see the confirmation. We hope you enjoy your stay at the Mile High Hotel.</p>
+          <p class="go-broncos">GO BRONCOS!</p>
         </section>
       </section>
-      <section class="successful-booking-container hidden">
-        <p class="successful-booking-message">Your room has been booked! Please refer to the upcoming bookings section of your dashboard to see the confirmation. We hope you enjoy your stay at the Mile High Hotel.</p>
-        <p class="go-broncos">GO BRONCOS!</p>
-      </section>
-    </section>
-  </main>
-  
-  <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
-  <script src="bundle.js"></script>
-</body>
+    </main>
+    <script src="bundle.js"></script>
+  </body>
 </html>

@@ -49,23 +49,23 @@ class Hotel {
 
   sortBookingsByDateDescending(bookings) {
     return bookings.sort((a, b) => {
-      return parseInt(b.date.split('/').join('')) - parseInt(a.date.split('/').join(''));
+      return parseInt(b.dateBooked.split('/').join('')) - parseInt(a.dateBooked.split('/').join(''));
     });
   }
 
   sortBookingsByDateAscending(bookings) {
     return bookings.sort((a, b) => {
-      return parseInt(a.date.split('/').join('')) - parseInt(b.date.split('/').join(''));
+      return parseInt(a.dateBooked.split('/').join('')) - parseInt(b.dateBooked.split('/').join(''));
     });
   }
 
   determinePastOrFutureBookings() {
     let currentDate = parseInt(new Date().toJSON().slice(0, 10).split('-').join(''));
-    this.findCustomerBookings().forEach(booking => {
-      if (parseInt(booking.date.split('/').join('')) >= currentDate) {
-        this.futureBookings.push(booking);
+    this.getRoomDetails().forEach(room => {
+      if (parseInt(room.dateBooked.split('/').join('')) >= currentDate) {
+        this.futureBookings.push(room);
       } else {
-        this.pastBookings.push(booking);
+        this.pastBookings.push(room);
       }
     });
   }
@@ -87,7 +87,7 @@ class Hotel {
                       "date": date,
                       "roomNumber": parseInt(roomNumber)
     }
-    return newBooking
+    return newBooking;
   }
 
 
