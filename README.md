@@ -1,102 +1,43 @@
-# Webpack Starter Kit
+# The Mile High Hotel
+## Turing M2 final solo project - Overlook
 
-This is a Test
+- [Tom Fettig](https://github.com/tfettig22)
 
+## Table of Contents
+- [Introduction](#introduction)
+- [Setup](#setup)
+- [Features](#features)
+- [Future Additions](#future-additions)
+- [Technologies](#technologies)
 
-## Clone This Repo
+## Introduction
+The Mile High Hotel is a website that allows the user to log in as one of 50 preset customers that can view and add hotel bookings for their upcoming travel plans. The website is themed as 'The Home of the Denver Broncos', and features a color scheme and images that are based on Denver's NFL team. The user can see a list of available rooms for upcoming date, and can filter these results by one of four room types. The hotel has 25 rooms, each one with a slightly different configuration of room type, bed size, number of beds, and bidets. The price per night of each room is shown, and the user can decide at will to book a room to add it to the current customer's bookings.
 
-That's right, _clone_ not fork. You will use this repo multiple times, but you can only fork a repository once. So here is what you need to do to clone the repo and still be able to push changes to your repo:
-
-1. Clone down this repo. Since you don't want to name your project "webpack-starter-kit", you can use an optional argument when you run `git clone` (you replace the `[...]` with the terminal command arguments): `git clone [remote-address] [what you want to name the repo]`
-1. Remove the default remote: `git remote rm origin` (notice that `git remote -v` not gives you back nothing)
-1. Create a new repo on GitHub with the name of `[what you want to name the repo]` to be consistent with naming
-1. Copy the address that you would use to clone down this repo - something like `git@github.com:...`
-1. Add this remote to your cloned down repo: `git remote add origin [address you copied in the previous step]` - do not include the brackets
-
-Now try to commit something (just add a line in the README) and push it up to your new repo. If everything is setup correctly, you should see the changes on GitHub.
+This app was written following the principles of TDD and the repo includes a very thorough test suite that checks all the logic of the data model.
 
 ## Setup
+1. This project fetches data from an API so you will need to begin by cloning down the API and running it.
+Clone the API by running `git@github.com:turingschool-examples/overlook-api.git`
+2. CD into that directory, run npm install and then npm start. You should see “Overlook API is now running on http://localhost:3001 !”
+Open a NEW terminal tab and cd somewhere outside of the API repo you just cloned. Do not close the tab that is running the API.
+3. Clone a copy of this repo to your machine. Add an optional argument after the repo url when cloning. The command should look like this: git clone [remote-address] [what you want to name the repo]. (no brackets)
+4. Once you have cloned the repo, change into that directory, run `npm install` and then `npm start`. You should see “Project is running at http://localhost:8080/"
+5. A link will appear in the terminal similar to http://localhost:8080/ (you might see 8081). Open that link in your browser. `Control + C` is the command to stop running the local server. Closing the terminal without stopping the server first could allow the server to continue to run in the background and cause problems.
+6. Enjoy!
 
-After one person has gone through the steps of cloning down this repo and editing the remote, everyone should clone down the repo.
+## Features
 
-Then install the library dependencies. Run:
+At the main page, the user will be asked to log in as a customer. The username must be customer[number] where number is anything from 01-50 (no brackets). The password is overlook2021 for all customers. Once logged in, the user is brought to the dashboard for the specific customer that is logged in. This will show a personalized message, the upcoming bookings (sorted by date ascending), past bookings (sorted by date descending), and the total amount spent for that customer. If the user clicks on the 'book a room' button in the top right, the page will change to a list of available rooms, and a section to filter the list of rooms by date and room type. The user can search through the rooms, filter the results as desired, and book a room of their choice. After booking, a page will display showing a success message and then automatically redirect back to the dashboard, where the user can now see the most recent booking they just made in their 'upcoming bookings' section. The user will not be able to pick a date in the past, and therefore cannot book a room for a past date.
 
-```bash
-npm install
-```
+![ezgif com-gif-maker (2)](https://user-images.githubusercontent.com/101140241/183770726-80bdcdf4-36c1-42a4-80a1-a99d9f521198.gif)
 
-To verify that it is setup correctly, run `npm start` in your terminal. Go to `http://localhost:8080/` and you should see a page with the Turing logo image and a beautiful gradient background. If that's the case, you're good to go. Enter `control + c` in your terminal to stop the server at any time.
+## Future Additions
+- Add manager login that can view the total rooms available, the total revenue, and the percentage of rooms occupied for today's date. The manager will also be able to search for a specific user by name see all of thier bookings and the total amount they have spent. As a manager, they will be able to add a booking for a specific room for a user of their choosing, or delete any upcoming booking.
 
-## Where to Add Your Code
-
-### JavaScript
-
-You have to be very intentional with where you add your feature code. This repo uses a tool called [webpack](https://webpack.js.org/) to combine many JavaScript files into one big file. Webpack enables you to have many, separate JavaScript files to keep your code organized and readable. Webpack expects all of your code files to be in a specific place, or else it doesn't know how to combine them all behind the scenes.
-
-**Create all of your feature code files in the `src` directory.**
-
-Since code is separated into multiple files, you need to use the `import` and `export` syntax to share code across file.
-
-Here is a video that walks through some information about [import and export](https://www.youtube.com/watch?v=_3oSWwapPKQ). There are a lot of resources out there about `import` and `export`, and resources will sometimes call them `ES6 modules`. It's something you will see in React and beyond.
-
-### HTML
-
-Add the HTML you need in the `index.html` file in the `./dist` directory. There is some boilerplate HTML that exists from the start that you can modify.
-
-### Images
-
-Add your image files in the `src/images` directory. Similar to CSS files, you need to `import` image files in the JavaScript entry file (`scripts.js`). Then go into the HTML and add an `img` element with the `src` attribute pointing to the `images` directory. There is an example in the `index.html` file for you to see.
-
-## How to View Your Code in Action
-
-In the terminal, run:
-
-```bash
-npm start
-```
-
-You will see a bunch of lines output to your terminal. One of those lines will be something like:
-
-```bash
-Project is running at http://localhost:8080/
-```
-
-Go to `http://localhost:8080/` in your browser to view your code running in the browser.
-
----
-
-## Test Files Organization
-
-Similar to feature code, your test code needs to be put in a specific place for it to run successfully.
-
-**Put all of your test files in the `test` directory.** As a convention, all test filenames should end with `-test.js`. For instance: `box-test.js`.
-
-## Running Your Tests
-
-Run your test suite using the command:
-
-```bash
-npm test
-```
-
-The test results will output to the terminal.
-
----
-
-## Linting Your Code
-
-Run the command in your terminal `npm run lint` to run the linter on your JavaScript code. There will be errors and warnings right from the start in this starter kit - the linter is still running successfully.
-
-Your linter will look at the JavaScript files you have within the `src` directory and the `test` directory.
-
-## Webpack?
-
-If you look in the `package.json` file, you'll see one of the library dependencies called `webpack`. If you're interested in learning more about what Webpack is and how it works behind the scenes, take a look through the [Webpack configuration documentation](https://webpack.js.org/concepts/).
-
-## Deploying to GitHub Pages
-
-_If you are finished with the functionality and testing of your project_, then you can consider deploying your project to the web! This way anyone can play it without cloning down your repo.
-
-[GitHub Pages](https://pages.github.com/) is a great way to deploy your project to the web. Don't worry about this until your project is free of bugs and well tested!
-
-If you _are_ done, you can follow [this procedure](./gh-pages-procedure.md) to get your project live on GitHub Pages.
+## Technologies
+- JavaScript
+- HTML
+- CSS
+- Webpack
+- API
+- TDD - Testing using Mocha and Chai
